@@ -40,7 +40,7 @@ pro_comment_format:           # 超级注释模块
 
 可以说非常清晰了，定义方案名称、拼音类型、以及注释显示逻辑，配置完毕保存。
 
-继续分别打开```radical_pinyin.schema.yaml```  ```melt_eng.schema``` 分别对反查和英文解码方案进行表头配置
+继续分别打开```wanxiang_radical.schema.yaml```  ```wanxiang_en.schema.yaml``` 分别对反查和英文解码方案进行表头配置
 
 ```
 ###############选择与之匹配的拼音方案#####################
