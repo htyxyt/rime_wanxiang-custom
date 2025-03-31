@@ -6,10 +6,10 @@ set_shuru_schema:
 
 ######################################################
 schema:
-  schema_id: radical_pinyin
+  schema_id: wanxiang_radical
   name: 反查：部件组字
   version: "1.1.0"
-  author: Mirtle
+  author: Mirtle, amzxyz
   description: |
 engine:
   processors:
@@ -37,7 +37,7 @@ speller:
     __include: set_shuru_schema
 
 translator:
-  dictionary: radical_pinyin
+  dictionary: wanxiang_radical
   enable_user_dict: false
 
 algebra_pinyin:

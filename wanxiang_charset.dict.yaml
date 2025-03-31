@@ -1,12 +1,12 @@
-# Rime dictionary	
-# encoding: utf-8	
-#https://github.com/amzxyz/RIME-LMDG	
-#常用字表，用于字符集过滤8105+	
----	
-name: charset	
-version: 1.0	
-sort: original	
-...	
+# Rime dictionary
+# encoding: utf-8
+#https://github.com/amzxyz/RIME-LMDG
+#常用字表，用于字符集过滤8105+𰻞𰻞
+---
+name: wanxiang_charset
+version: 1.0
+sort: original
+...
 一	t
 乙	t
 二	t

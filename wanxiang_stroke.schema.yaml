@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 schema:
-  schema_id: stroke
+  schema_id: wanxiang_stroke
   name: "反查：五笔画"
   version: "0.5"
   author:
@@ -32,7 +32,7 @@ speller:
   delimiter: " '"
 
 translator:
-  dictionary: stroke
+  dictionary: wanxiang_stroke
   enable_user_dict: false
 
 key_binder:

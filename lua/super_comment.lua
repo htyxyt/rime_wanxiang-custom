@@ -56,11 +56,28 @@ function CR.init(env)
 
     -- 仅在 corrections_cache 为 nil 时加载词典
     if not corrections_cache then
-        local corrections_file_path = rime_api.get_user_data_dir() .. "/cn_dicts/corrections.dict.yaml"
-        CR.corrections = load_corrections(corrections_file_path)
+        -- 优先查找用户目录，再查系统目录
+        local function find_file(filename, subdir)
+            local user_path = rime_api.get_user_data_dir() .. "/" .. subdir .. "/" .. filename
+            local shared_path = rime_api.get_shared_data_dir() .. "/" .. subdir .. "/" .. filename
+
+            local file = io.open(user_path, "r")
+            if file then file:close(); return user_path end
+
+            file = io.open(shared_path, "r")
+            if file then file:close(); return shared_path end
+
+            return nil
+        end
+
+        local corrections_file_path = find_file("corrections.dict.yaml", "cn_dicts")
+        if corrections_file_path then
+            CR.corrections = load_corrections(corrections_file_path)
+        else
+            CR.corrections = {}
+        end
     end
 end
-
 function CR.run(cand, env)
     -- 使用候选词的 comment 作为 code，在缓存中查找对应的修正
     local correction = corrections_cache[cand.comment]
