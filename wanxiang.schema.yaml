@@ -70,6 +70,7 @@ engine:
     - lua_processor@*cold_word_drop.processor
     - lua_processor@*quick_symbol_text    #快符引导以及重复上屏
     - lua_processor@*super_tips           #超级提示模块：表情、简码、翻译、化学式、等等靠你想象
+    #- lua_processor@*super_tips_phone*S   #超级提示模块：手机上启用这个，连同lua_filter还有一处
     - lua_processor@*userdb_sync_delete   #通过输入 /del 触发,用于清理自定义同步目录下txt用户词典里被标记c<0的词条
     - ascii_composer
     - recognizer
@@ -116,7 +117,8 @@ engine:
     - simplifier@traditionalize                     # 简繁切换
     - simplifier@mars                               #火星文
     - simplifier@chinese_english                    #中英翻译
-    - lua_filter@*search@radical_pinyin             # 部件拆字辅码放在简繁转换之后
+    - lua_filter@*search@wanxiang_radical           # 部件拆字辅码放在简繁转换之后
+    #- lua_filter@*super_tips_phone*M              #超级提示模块：手机上启用这个，连同lua_processor还有一处
     - lua_filter@*super_comment                     #超级注释模块，支持错词提示、辅助码显示，部件组字读音注释，支持个性化配置和关闭相应的功能，详情搜索super_comment进行详细配置
     - uniquifier                                    # 去重
 
