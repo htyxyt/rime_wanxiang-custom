@@ -11,6 +11,8 @@ set_gongjian_mohu:    #可选的值有：18键, 14键, 9键, 26键  ，PC请选2
 super_comment:           # 超级注释模块
   candidate_length: 1         # 候选词注释提醒的生效长度，0为关闭  但同时清空其它，应当使用开关或者快捷键来处理    
   corrector_type: "{comment}"  #错音错词提示显示类型，比如"({comment})" 
+__include: octagram            #启用语言模型
+#__include: set_chord_composer  #启用并击处理，不懂得不要开启就是了
 ########################以下是方案配置######################################################
 schema:
   schema_id: wanxiang
@@ -65,7 +67,8 @@ switches:
 # 输入引擎
 engine:
   processors:
-    - predictor
+    - predictor                                 #联想处理器
+    - chord_composer                            #并击处理器
     - lua_processor@*select_character          # 以词定字
     - lua_processor@*cold_word_drop.processor
     - lua_processor@*quick_symbol_text    #快符引导以及重复上屏
@@ -728,18 +731,104 @@ add_user_dict:
   tips: "〔自造词〕"
 
 
-__include: octagram   #启用语言模型
-#语言模型
+
+#语法模型
 octagram:
   __patch:
     grammar:
       language: wanxiang-lts-zh-hans
       collocation_max_length: 8         #命中的最长词组
       collocation_min_length: 2         #命中的最短词组，搭配词频健全的词库时候应当最小值设为3避开2字高频词
-      collocation_penalty: -12          #默认-12 对常见搭配词组施加的惩罚值。较高的负值会降低这些搭配被选中的概率，防止过于频繁地出现某些固定搭配。
+      collocation_penalty: -10          #默认-12 对常见搭配词组施加的惩罚值。较高的负值会降低这些搭配被选中的概率，防止过于频繁地出现某些固定搭配。
       non_collocation_penalty: -12      #默认-12 对非搭配词组施加的惩罚值。较高的负值会降低非搭配词组被选中的概率，避免不合逻辑或不常见的词组组合。
       weak_collocation_penalty: -24     #默认-24 对弱搭配词组施加的惩罚值。保持默认值通常是为了有效过滤掉不太常见但仍然合理的词组组合。
-      rear_penalty: -18                #默认-18 对词组中后续词语的位置施加的惩罚值。较高的负值会降低某些词语在句子后部出现的概率，防止句子结构不自然。
+      rear_penalty: -30                 #默认-18 对词组中后续词语的位置施加的惩罚值。较高的负值会降低某些词语在句子后部出现的概率，防止句子结构不自然。
     translator/contextual_suggestions: false
     translator/max_homophones: 5
     translator/max_homographs: 5
+
+#并击处理器
+set_chord_composer:
+  __patch:
+    chord_composer:
+      finish_chord_on_first_key_release: true #有一键被释放时立刻触发合成
+      alphabet: qazwsxedcrfvtgbyhnujmik,ol.p;/ `
+      algebra:
+      # 符号和数字映射为大写字母，分离其转义干扰
+        - xlit|;,./|ACXZ|
+      # 左手编码包装
+        - xform/([qwertasdfgzxcvb]+)/<$1>/
+      # 右手编码包装
+        - xform/([yuiophjklAnmCXZ]+)/<$1>/
+      # 主处理区（尽量按照顺序排列）
+        - xform=(<q>|<p>)=q=
+        - xform=(<w>|<o>)=w=
+        - xform=(<e>|<i>)=e=
+        - xform=(<r>|<u>)=r=
+        - xform=(<t>|<y>)=t=
+        - xform=(<ef>|<ji>)=y=
+        - xform=(<er>|<ui>)=u=
+        - xform=(<we>|<io>)=i=
+        - xform=(<wr>|<uo>)=o=
+        - xform=(<qr>|<up>)=p=
+        - xform=(<a>|<A>)=a=
+        - xform=(<s>|<l>)=s=
+        - xform=(<d>|<k>)=d=
+        - xform=(<f>|<j>)=f=
+        - xform=(<g>|<h>)=g=
+        - xform=(<se>|<il>)=h=
+        - xform=(<wf>|<jo>)=h=
+        - xform=(<df>|<jk>)=j=
+        - xform=(<sd>|<kl>)=k=
+        - xform=(<sf>|<jl>)=l=
+        - xform=(<z>|<Z>)=z=
+        - xform=(<x>|<X>)=x=
+        - xform=(<c>|<C>)=c=
+        - xform=(<v>|<m>)=v=
+        - xform=(<b>|<n>)=b=
+        - xform=(<af>|<jA>)=n=
+        - xform=(<cv>|<mC>)=m=
+        - xform=(<dg>)=,=
+        - xform=(<ag>)=.=
+        - xform=(<hk>)=!=
+        - xform=(<hA>)=?=
+        - xform=(<xc>|<CX>)=,=
+        - xform=(<xv>|<mX>)=.=
+        - xform=(<zx>|<XZ>)=!=
+        - xform=(<zv>|<mZ>)=?=
+        - xform=(<ad>|<kA>)=;=
+        - xform=(<as>|<lA>)=/=
+        - xform=(<vb>|<nm>)=/=
+        - xform=(<rt>|<yu>)=“=
+        - xform=(<et>|<yi>)=”=
+        - xform=(<qa>|<pA>)=~”=
+        - xform=(<aw>|<oA>)=^”=
+        - xform=(<ed>|<ik>)=!”=
+        - xform=(<rf>|<uj>)=?”=
+        - xform=(<ar>|<uA>)=:“=
+        - xform=(<sr>|<ul>)=.”=
+        - xform=(<qw>|<op>)=,“=
+        - xform=(<zf>|<jZ>)=+=
+        - xform=(<xf>|<jX>)=-=
+        - xform=(<cf>|<jC>)=%=
+        - xform=(<dr>|<uk>)=*=
+        - xform=(<qe>|<ip>)=@=
+        - xform=(<tg>)=:=
+        - xform=(<yh>)=#=
+        - xform=(<fg>)=~=
+        - xform=(<hj>)=^=
+      #  - xform=(<qt>|<yp>)==
+      #  - xform=(<rt>|<yu>)==
+      #  - xform=(<fg>|<hj>)==
+      #  - xform=(<tg>|<yh>)==   
+      #  - xform=(<qw>|<op>)==
+  ###################################
+        # 屏蔽未定义的指法
+        - xform/<1>/ /
+        - xform/<"1>/"/
+        - xform/^.*<.+>.*$//
+        # 符号转义的后处理
+        - xform=，="""",=
+        - xform=。="""".=
+        - xform=！=""""!=
+        - xform=？=""""?=
