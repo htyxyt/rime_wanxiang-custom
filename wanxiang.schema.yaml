@@ -118,7 +118,6 @@ engine:
     - lua_filter@*super_preedit                     #输入码显示全拼并带上音调
     - simplifier@emoji                              # Emoji
     - simplifier@traditionalize                     # 简繁切换
-    - simplifier@mars                               #火星文
     - simplifier@chinese_english                    #中英翻译
     - lua_filter@*search@wanxiang_radical           # 部件拆字辅码放在简繁转换之后
     #- lua_filter@*super_tips_phone*M              #超级提示模块：手机上启用这个，连同lua_processor还有一处
@@ -256,10 +255,6 @@ emoji:
   opencc_config: emoji.json
   inherit_comment: false  # 在反查中，emoji 返回空注释
 
-# 火星文切换
-mars:
-  opencc_config: martian.json 
-  option_name: mars
 
 #中文转英文
 chinese_english:
