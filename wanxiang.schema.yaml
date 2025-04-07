@@ -366,6 +366,17 @@ key_binder:
     - { when: composing, accept: Control+6, send_sequence: '{Home}{Shift+Right}{Shift+Right}{Shift+Right}{Shift+Right}{Shift+Right}{Shift+Right}' }
     - { when: composing, accept: Control+7, send_sequence: '{Home}{Shift+Right}{Shift+Right}{Shift+Right}{Shift+Right}{Shift+Right}{Shift+Right}{Shift+Right}' }
 
+editor:
+   bindings:
+     space: confirm                        # 空格键：上屏候选项
+     Return: commit_raw_input              # 回车键：上屏原始输入
+     Control+Return: commit_script_text    # Ctrl+回车键：上屏变换后输入（经过 preedit转换的）
+     Control+Shift+Return: commit_comment  # Ctrl+Shift+回车键：上屏 comment
+     BackSpace: revert                     # 退格键：向前删除（撤消上次输入）
+     Delete: delete                        # Delete 键：向后删除
+     Control+BackSpace: back_syllable      # Ctrl+退格键：删除一个音节
+     Control+Delete: delete_candidate      # Ctrl+Delete键：删除或降权候选项
+     Escape: cancel                        # Esc 键：取消输入
 
 # 拼写设定
 speller:
