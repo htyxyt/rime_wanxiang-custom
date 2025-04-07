@@ -1,3 +1,6 @@
+-- author: https://github.com/ChaosAlphard
+-- 说明 https://github.com/gaboolic/rime-shuangpin-fuzhuma/pull/41
+
 -- 原有功能：
 -- 随机数生成、三角函数、幂函数、指数函数、对数函数求值
 -- 计算n次方根、平均值、方差、阶乘、角度与弧度的相互转化
@@ -7,12 +10,12 @@
 -- 求解一次、二次函数解析式、圆的方程；
 -- 取整函数（包括向上取整和向下取整）、求余函数；
 -- 已知数列中任意两项，求通项公式(等差或等比)；求数列的前n项和(等差或等比)；
--- 已知三角形三边长，求面积；已知正多边形边数n、边长a，求面积
--- 判断两直线位置关系，给出距离或交点坐标；点到点、点到直线距离求解
--- 求解两点间线段的垂直平分线方程
--- 组合数、排列数、最大公因数、最小公倍数求解
+-- 已知三角形三边长，求面积；已知正多边形边数n、边长a，求面积；
+-- 判断两直线位置关系，给出距离或交点坐标；点到点、点到直线距离求解；
+-- 求解两点间线段的垂直平分线方程；
+-- 组合数、排列数、最大公因数、最小公倍数求解；
 -- 点关于直线的对称点坐标、直线关于直线(或点)的对称直线方程求解；
--- 自然数的幂方求和，包括平方和、立方和、4次方之和；前n个奇数或偶数的平方和、立方和
+-- 连续自然数的幂方求和，包括平方和、立方和、4次方之和；前n个奇数或偶数的平方和、立方和、4次方之和
 
 
 -- 功能代码一览：
@@ -23,6 +26,8 @@
 -- esq = "前n个偶数的平方和"
 -- ocb = "前n个奇数的立方和"
 -- ecb = "前n个偶数的立方和"
+-- ofp = "前n个奇数的4次方之和"
+-- efp = "前n个偶数的4次方之和"
 -- syl = "已知直线l₁:A₁x+B₁y+C₁=0和l₂:A₂x+B₂y+C₂=0，求l₁关于l₂的对称直线l₃的方程"
 -- cbnt = "计算组合数"
 -- pmtt = "计算排列数"
@@ -40,7 +45,7 @@
 -- sjx = "已知三角形的三边长,求三角形面积"
 -- dbsl = "已知等比数列的首项a1,公比q ,求指定的前n项和"
 -- dcsl = "已知等差数列的首项a1,公差d ,求指定的前n项和"
--- txgs = "已知数列的任意两项,求其通项公式"
+-- txgs = "已知数列的任意两项aᵢ、aₖ,求其通项公式"
 -- cexr = "已知圆心坐标和半径求圆的方程"
 -- cexl = "已知圆心和圆上不同两点的坐标求圆方程"
 -- cesd = "已知圆上不同三点的坐标，求圆方程"
@@ -174,125 +179,6 @@ function fs(n)
         return string.sub(s, 1, j)
     end
 end
-
-
-
-
--- 连续自然数平方和
-function sum_of_squares(n)
-    -- 检查参数
-    if type(n) ~= "number" or n < 1 then
-        return "参数必须为正整数"
-    end
-    -- 计算平方和
-    local result = n*(n+1)*(2*n+1) / 6
-    result = fn(result)
-    return result
-end
-calc_methods["sq"] = sum_of_squares
-methods_desc["sq"] = "连续自然数平方和"
-
-
-
-
--- 连续自然数立方和
-function sum_of_cubes(n)
-    -- 检查参数
-    if type(n) ~= "number" or n < 1 then
-        return "参数必须为正整数"
-    end
-    -- 计算立方和
-    local result = (n*(n+1))^2 / 4
-    result = fn(result)
-    return result
-end
-calc_methods["cb"] = sum_of_cubes
-methods_desc["cb"] = "连续自然数立方和"
-
-
-
-
--- 连续自然数4次方之和
-function sum_of_fourth_powers(n)
-    -- 检查参数
-    if type(n) ~= "number" or n < 1 then
-        return "参数必须为正整数"
-    end
-    -- 计算4次方和
-    local result = n*(n+1)*(2*n+1)*(3*n^2+3*n-1) / 30
-    result = fn(result)
-    return result
-end
-calc_methods["fp"] = sum_of_fourth_powers
-methods_desc["fp"] = "连续自然数4次方之和"
-
-
-
-
--- 前n个奇数的平方和
-function sum_of_odd_squares(n)
-    -- 检查参数
-    if type(n) ~= "number" or n < 1 then
-        return "参数必须为正整数"
-    end
-    -- 计算平方和
-    local result = n*(4*n^2-1) / 3
-    result = fn(result)
-    return result
-end
-calc_methods["osq"] = sum_of_odd_squares
-methods_desc["osq"] = "前n个奇数的平方和"
-
-
-
-
--- 前n个偶数的平方和
-function sum_of_even_squares(n)
-    -- 检查参数
-    if type(n) ~= "number" or n < 1 then
-        return "参数必须为正整数"
-    end
-    -- 计算平方和
-    local result = 2*n*(n+1)*(2*n+1) / 3
-    result = fn(result)
-    return result
-end
-calc_methods["esq"] = sum_of_even_squares
-methods_desc["esq"] = "前n个偶数的平方和"
-
-
-
-
--- 前n个奇数的立方和
-function sum_of_odd_cubes(n)
-    -- 检查参数
-    if type(n) ~= "number" or n < 1 then
-        return "参数必须为正整数"
-    end
-    -- 计算立方和
-    local result = n^2*(2*n^2-1)
-    result = fn(result)
-    return result
-end
-calc_methods["ocb"] = sum_of_odd_cubes
-methods_desc["ocb"] = "前n个奇数的立方和"
-
-
-
-
--- 前n个偶数的立方和
-function sum_of_even_cubes(n)
-    -- 检查参数
-    if type(n) ~= "number" or n < 1 then
-        return "参数必须为正整数"
-    end
-    -- 计算立方和
-    local result = 2*(n*(n+1))^2
-    result = fn(result)
-    return result
-end
-calc_methods["ecb"] = sum_of_even_cubes
-methods_desc["ecb"] = "前n个偶数的立方和"
 
 
 
@@ -638,6 +524,159 @@ methods_desc["mod"] = "求余函数"
 
 
 
+-- 连续自然数平方和
+function sum_of_squares(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算平方和
+    local result = n*(n+1)*(2*n+1) / 6
+    result = fn(result)
+    return result
+end
+calc_methods["sq"] = sum_of_squares
+methods_desc["sq"] = "连续自然数平方和"
+
+
+
+
+-- 连续自然数立方和
+function sum_of_cubes(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算立方和
+    local result = (n*(n+1))^2 / 4
+    result = fn(result)
+    return result
+end
+calc_methods["cb"] = sum_of_cubes
+methods_desc["cb"] = "连续自然数立方和"
+
+
+
+
+-- 连续自然数4次方之和
+function sum_of_fourth_powers(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算4次方和
+    local result = n*(n+1)*(2*n+1)*(3*n^2+3*n-1) / 30
+    result = fn(result)
+    return result
+end
+calc_methods["fp"] = sum_of_fourth_powers
+methods_desc["fp"] = "连续自然数4次方之和"
+
+
+
+
+-- 前n个奇数的平方和
+function sum_of_odd_squares(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算平方和
+    local result = n*(4*n^2-1) / 3
+    result = fn(result)
+    return result
+end
+calc_methods["osq"] = sum_of_odd_squares
+methods_desc["osq"] = "前n个奇数的平方和"
+
+
+
+
+-- 前n个偶数的平方和
+function sum_of_even_squares(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算平方和
+    local result = 2*n*(n+1)*(2*n+1) / 3
+    result = fn(result)
+    return result
+end
+calc_methods["esq"] = sum_of_even_squares
+methods_desc["esq"] = "前n个偶数的平方和"
+
+
+
+
+-- 前n个奇数的立方和
+function sum_of_odd_cubes(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算立方和
+    local result = n^2*(2*n^2-1)
+    result = fn(result)
+    return result
+end
+calc_methods["ocb"] = sum_of_odd_cubes
+methods_desc["ocb"] = "前n个奇数的立方和"
+
+
+
+
+-- 前n个偶数的立方和
+function sum_of_even_cubes(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算立方和
+    local result = 2*(n*(n+1))^2
+    result = fn(result)
+    return result
+end
+calc_methods["ecb"] = sum_of_even_cubes
+methods_desc["ecb"] = "前n个偶数的立方和"
+
+
+
+
+-- 前n个奇数的4次方之和
+function sum_of_odd_fourth_powers(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算4次方和
+    local result = (48*n^5-40*n^3+7*n) / 15
+    result = fn(result)
+    return result
+end
+calc_methods["ofp"] = sum_of_odd_fourth_powers
+methods_desc["ofp"] = "前n个奇数的4次方之和"
+
+
+
+
+-- 前n个偶数的4次方之和
+function sum_of_even_fourth_powers(n)
+    -- 检查参数
+    if type(n) ~= "number" or n < 1 or n~= floor(n) then
+        return "参数必须为正整数"
+    end
+    -- 计算4次方和
+    local result = 8*n*(n+1)*(2*n+1)*(3*n^2+3*n-1) / 15
+    result = fn(result)
+    return result
+end
+calc_methods["efp"] = sum_of_even_fourth_powers
+methods_desc["efp"] = "前n个偶数的4次方之和"
+
+
+
+
 -- 圆的标准方程的表达式优化
 local function CircleStandardEquation(h, k, r_squared)
     local standardEquation
@@ -841,7 +880,7 @@ end
 -- 已知正多边形边数 n 和边长 a ，计算正多边形面积
 function calculateRegularPolygonArea(n, a)
     -- 检查边数n是否为正整数
-    if n ~= math.floor(n) or n <= 0 then
+    if type(n) ~= "munber" or n ~= floor(n) or n < 1 then
         return "错误：边数n必须为正整数。"
     end
     -- 检查边长a是否为正数
@@ -905,16 +944,19 @@ methods_desc["dcsl"] = "已知等差数列的首项a1,公差d ,求指定的前n�
 
 
 
--- 已知数列中任意两项,求通项公式(等差或等比),b=0为等差数列,b=1为等比数列
+-- 已知数列中任意两项aᵢ、aₖ,求通项公式(等差或等比),b=0为等差数列,b=1为等比数列
 function findSequenceFormula(ai, i, ak, k, b)
     -- 检查参数正确性
-    if i ~= math.floor(i) or i <= 0 or k ~= math.floor(k) or k<= 0 then
+    if type(i) ~= "number" or i ~= floor(i) or i < 1 or type(k) ~= "munber" or k ~= floor(k) or k < 1 then
         return "i 和 k 必须是正整数"
     end
     if ai == ak and i == k then
-        return "ai 、 ak 和对应的项数不能同时相等"
+        return "aᵢ、aₖ 和对应的项数不能同时相等"
     end
-
+    -- 检查是否为常数列
+    if ai == ak and i ~= k then
+        return "aₙ=" .. ai
+    end
     -- 计算等差数列的通项公式
     local function arithmeticSequence(ai, i, ak, k)
         local d = (ak - ai) / (k - i)
@@ -922,37 +964,23 @@ function findSequenceFormula(ai, i, ak, k, b)
         d = fn(d)
         a1 = fn(a1)
         -- 根据公差d的正负调整公式
-        if d >= 0 then
+        if d > 0 then
             return "aₙ=" .. a1 .. "+(n-1)*" .. d
         else
             return "aₙ=" .. a1 .. "-(n-1)*" .. -d
         end
     end
-
     -- 计算等比数列的通项公式
     local function geometricSequence(ai, i, ak, k)
         local q = ak/ai
-        local n = k-i
-
-        -- 计算 x 开 n 次方
-        local function nth_root(x, n)
-            if n % 2 == 0 and x < 0 then
-                return nil -- 开偶次方时负数没有实数解
-            elseif x < 0 then
-                return -((-x) ^ (1 / n))
-            else
-                return x ^ (1 / n)
-            end
+        local n = k-i        
+        local s = nth_root(q, n) 
+        if s == nil or s== 0 then
+            return "公比为0或不存在,无法计算通项公式"
         end
-        
-        local s = nth_root(q, n) -- 使用 nth_root 函数计算 q 的 n 次方根
-        if s == nil then
-            return "无法计算通项公式"
-        end
-        local a1 = ai / (s ^ (i - 1)) -- 计算首项 a1
+        local a1 = ai / (s ^ (i - 1)) 
         s = fn(s)
         a1 = fn(a1)
-
         -- 根据公比s的正负调整公式
         if s < 0 then
             return "aₙ=" .. a1 .. "*(" .. s .. ")ⁿ⁻¹"
@@ -960,12 +988,6 @@ function findSequenceFormula(ai, i, ak, k, b)
             return "aₙ=" .. a1 .. "*" .. s .. "ⁿ⁻¹"
         end
     end
-
-    -- 检查是否为常数列
-    if ai == ak and i ~= k then
-        return "aₙ=" .. ai
-    end
-
     -- 根据b值返回通项公式
     if b == 0 then
         return arithmeticSequence(ai, i, ak, k)
@@ -979,7 +1001,7 @@ function findSequenceFormula(ai, i, ak, k, b)
     end
 end
 calc_methods["txgs"] = findSequenceFormula
-methods_desc["txgs"] = "已知数列的任意两项,求其通项公式"
+methods_desc["txgs"] = "已知数列的任意两项aᵢ、aₖ,求其通项公式"
 
 
 
