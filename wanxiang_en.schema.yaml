@@ -3,7 +3,7 @@
 
 ###############选择与之匹配的拼音方案#####################
 set_shuru_schema:
-  __include: algebra_zrm    #可选的选项有（algebra_pinyin, algebra_zrm, algebra_flypy, algebra_mspy, algebra_sogou, algebra_abc, algebra_ziguang）
+  __include: 自然码    #可选的选项有（全拼, 自然码, 自然龙, 小鹤双拼, 搜狗双拼, 微软双拼, 智能ABC, 紫光双拼）
 
 ######################################################
 
@@ -120,8 +120,7 @@ algebra_common:
   - derive/^([a-z]{9})/\U$1/
   - derive/^([a-z]{10})/\U$1/
 
-# 全拼
-algebra_pinyin:
+全拼:
   __include: algebra_common
   __append:
     - derive/(?<!\d)1([1-9])(?!\d)/shi$1/
@@ -145,8 +144,7 @@ algebra_pinyin:
     - derive/9/jiu/
     - derive/\+/jia/
     - derive/#/jing/
-# 自然码双拼
-algebra_zrm:
+自然码:
   __include: algebra_common
   __append:
     - derive/(?<!\d)1([1-9])(?!\d)/ui$1/
@@ -170,8 +168,7 @@ algebra_zrm:
     - derive/9/jq/
     - derive/\+/jw/
     - derive/#/jy/
-# 小鹤双拼
-algebra_flypy:
+小鹤双拼:
   __include: algebra_common
   __append:
     - derive/(?<!\d)1([1-9])(?!\d)/ui$1/
@@ -195,8 +192,7 @@ algebra_flypy:
     - derive/9/jq/
     - derive/\+/jx/
     - derive/#/jk/
-# 微软双拼
-algebra_mspy:
+微软双拼:
   __include: algebra_common
   __append:
     - derive/(?<!\d)1([1-9])(?!\d)/ui$1/
@@ -221,8 +217,7 @@ algebra_mspy:
     - derive/9/jq/
     - derive/\+/jw/
     - derive/#/j;/
-# 搜狗双拼
-algebra_sogou:
+搜狗双拼:
   __include: algebra_common
   __append:
     - derive/(?<!\d)1([1-9])(?!\d)/ui$1/
@@ -247,8 +242,7 @@ algebra_sogou:
     - derive/9/jq/
     - derive/\+/jw/
     - derive/#/jy/
-# 智能ABC双拼
-algebra_abc:
+智能ABC:
   __include: algebra_common
   __append:
     - derive/(?<!\d)1([1-9])(?!\d)/vi$1/
@@ -273,8 +267,7 @@ algebra_abc:
     - derive/9/jr/
     - derive/\+/jd/
     - derive/#/jy/
-# 紫光双拼
-algebra_ziguang:
+紫光双拼:
   __include: algebra_common
   __append:
     - derive/(?<!\d)1([1-9])(?!\d)/ii$1/

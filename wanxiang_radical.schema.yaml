@@ -2,7 +2,7 @@
 # encoding: utf-8
 ###############选择与之匹配的拼音方案#####################
 set_shuru_schema:
-  __include: algebra_zrm    #可选的选项有（algebra_pinyin, algebra_zrm, algebra_flypy, algebra_mspy, algebra_sogou, algebra_abc, algebra_ziguang）
+  __include: 自然码    #可选的选项有（全拼, 自然码, 自然龙, 小鹤双拼, 搜狗双拼, 微软双拼, 智能ABC, 紫光双拼）
 
 ######################################################
 schema:
@@ -40,14 +40,14 @@ translator:
   dictionary: wanxiang_radical
   enable_user_dict: false
 
-algebra_pinyin:
+全拼:
   - xform/'//
   - derive/^([nl])ue$/$1ve/
   - derive/'([nl])ue$/'$1ve/
   - derive/^([jqxy])u/$1v/
   - derive/'([jqxy])u/'$1v/
 
-algebra_zrm:
+自然码:
   - derive/^([jqxy])u(?=^|$|')/$1v/
   - derive/'([jqxy])u(?=^|$|')/'$1v/
   - derive/^([aoe])([ioun])(?=^|$|')/$1$1$2/
@@ -84,7 +84,7 @@ algebra_zrm:
   - xform/in(?=^|$|')/<n>/
   - xform/'|<|>//
 
-algebra_flypy:
+小鹤双拼:
   - derive/^([jqxy])u(?=^|$|')/$1v/
   - derive/'([jqxy])u(?=^|$|')/'$1v/
   - derive/^([aoe])([ioun])(?=^|$|')/$1$1$2/
@@ -121,7 +121,7 @@ algebra_flypy:
   - xform/in(?=^|$|')/<b>/
   - xform/'|<|>//
 
-algebra_mspy:
+微软双拼:
   - derive/^([jqxy])u(?=^|$|')/$1v/
   - derive/'([jqxy])u(?=^|$|')/'$1v/
   - derive/^([aoe].*)(?=^|$|')/o$1/
@@ -160,7 +160,7 @@ algebra_mspy:
   - xform/ing(?=^|$|')/;/
   - xform/'|<|>//
 
-algebra_sogou:
+搜狗双拼:
   - derive/^([jqxy])u(?=^|$|')/$1v/
   - derive/'([jqxy])u(?=^|$|')/'$1v/
   - derive/^([aoe].*)(?=^|$|')/o$1/
@@ -198,7 +198,7 @@ algebra_sogou:
   - xform/ing(?=^|$|')/;/
   - xform/'|<|>//
 
-algebra_abc:
+智能ABC:
   - xform/^zh/<a>/
   - xform/^ch/<e>/
   - xform/^sh/<v>/
@@ -230,7 +230,7 @@ algebra_abc:
   - xform/[uv]e(?=^|$|')|ui(?=^|$|')/<m>/
   - xform/'|<|>//
 
-algebra_ziguang:
+紫光双拼:
   - derive/^([jqxy])u(?=^|$|')/$1v/
   - derive/'([jqxy])u(?=^|$|')/'$1v/
   - xform/'([aoe].*)(?=^|$|')/'<o>$1/
@@ -263,4 +263,3 @@ algebra_ziguang:
   - xform/ao(?=^|$|')/<q>/
   - xform/an(?=^|$|')/<r>/
   - xform/'|<|>//
-
